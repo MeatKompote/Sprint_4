@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public abstract class AbstractPage {
 
     protected WebDriver driver;
@@ -24,12 +26,12 @@ public abstract class AbstractPage {
     }
 
     //___________________ Нажатие на элемент ____________________
-    public void сlickToTheElement(By elementLocator) {
+    public void clickToTheElement(By elementLocator) {
         driver.findElement(elementLocator).click();
     }
 
     //___________________ Ожидание прогрузки элемента ___________
-    public void waitTillElementIsvisible (By elementLocator) {
+    public void waitTillElementIsVisible (By elementLocator) {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(elementLocator));
     }
@@ -45,4 +47,36 @@ public abstract class AbstractPage {
         driver.findElement(elementLocator).sendKeys(newText);
     }
 
+    // прокрутка до элемента в списке вопросов или ответов
+    public void scrollDownToTheElementFromTheList(int questionNumber, By locatorForList) {
+        List<WebElement> elements = driver.findElements(locatorForList);
+        for (int i = 0; i < elements.size(); i++) {
+            if (i == questionNumber) {
+                ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", elements.get(i));
+                break;
+            }
+        }
+    }
+
+    // клик на нужный вопрос из списка вопросов
+    public void clickOnTheElementFromTheList(int questionNumber, By locatorForList) {
+        List<WebElement> elements = driver.findElements(locatorForList);
+        for (int i = 0; i < elements.size(); i++) {
+            if (i == questionNumber) {
+                elements.get(i).click();
+                break;
+            }
+        }
+    }
+
+    // забираем текст для сравнения ответа на важный вопрос
+    public String getTextFromAnswerPanel(int questionNumber, By locatorForList) {
+        List<WebElement> elements = driver.findElements(locatorForList);
+        for (int i = 0; i < elements.size(); i++) {
+            if (i == questionNumber) {
+                return elements.get(i).getText();
+            }
+        }
+        return null;
+    }
 }

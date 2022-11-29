@@ -4,8 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 public class ScooterHomePage extends AbstractPage{
 
@@ -21,6 +21,12 @@ public class ScooterHomePage extends AbstractPage{
     private By yandexScooterEmblem = By.className("Header_LogoScooter__3lsAR");
 
     //___________________ Локаторы на вопросы ____________________
+
+    // локатор для хэдеров выпадающего списка
+    private By locatorQuestionAccordeonHeader = By.xpath(".//div[@class='accordion__heading']");
+
+    // локатор для ответов на важные вопросы
+    private By locatorAnswerAccordeonPanel = By.xpath(".//div[@class='accordion__panel']/p");
 
     // первый вопрос в списке "Сколько это стоит? И как оплатить?"
     private By firstImportantQuestion = By.id("accordion__heading-0");
@@ -73,11 +79,18 @@ public class ScooterHomePage extends AbstractPage{
 
     // _________________ локаторы для кнопок _____________________
 
+    // локатор для списка кнопок с тектом "Заказать"
+    private By listOfOrderButtons = By.xpath(".//button[text()='Заказать']");
+
     // кнопка "Заказать" в верхней часте страницы
     private By orderButtonHeader = By.xpath(".//div[@class='Header_Nav__AGCXC']/button[@class='Button_Button__ra12g']");
 
     // кнопка "Заказать" в середине страницы
     private By orderButtonBody = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button");
+
+    // кнопка для закрытия сообщения о куках
+
+    private By closingCookieMessageButton = By.id("rcc-confirm-button");
 
     // _________________ геттеры для локаторов _____________________
     public By getFirstImportantQuestion() {
@@ -156,4 +169,19 @@ public class ScooterHomePage extends AbstractPage{
         return orderButtonBody;
     }
 
+    public By getLocatorQuestionAccordeonHeader() {
+        return locatorQuestionAccordeonHeader;
+    }
+
+    public By getLocatorAnswerAccordeonPanel() {
+        return locatorAnswerAccordeonPanel;
+    }
+
+    public By getListOfOrderButtons() {
+        return listOfOrderButtons;
+    }
+
+    public By getClosingCookieMessageButton() {
+        return closingCookieMessageButton;
+    }
 }
